@@ -14,7 +14,7 @@
       set_fact:
         pgrole: 'wallabag'
         intport: '80'
-        extport: '8080'      
+        extport: '8090'      
         image: 'wallabag/wallabag'
 
     # CORE (MANDATORY) ############################################################
