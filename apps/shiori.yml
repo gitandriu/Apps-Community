@@ -14,7 +14,7 @@
       set_fact:
         pgrole: 'shiori'
         intport: '8080'
-        extport: '8080'      
+        extport: '8081'      
         image: 'radhifadlillah/shiori'
 
     # CORE (MANDATORY) ############################################################
@@ -27,7 +27,7 @@
         pg_labels:
           traefik.enable: 'true'
           traefik.port: '{{intport}}'
-          #traefik.frontend.auth.forward.address: '{{gauth}}'
+          traefik.frontend.auth.forward.address: '{{gauth}}'
           traefik.frontend.rule: 'Host:{{pgrole}}.{{domain.stdout}},{{tldset}}'
 
     - name: 'Setting PG Volumes'
