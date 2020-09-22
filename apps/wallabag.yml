@@ -42,8 +42,8 @@
     - name: 'Setting PG Volumes'
       set_fact:
         pg_volumes:
-          - '/opt/appdata/{{pgrole}}/data:/data:rw'
-          - '/opt/appdata/{{pgrole}}/config:/config:ro'        
+          - '/opt/appdata/{{pgrole}}/data:/var/www/wallabag/data:rw'
+          - '/opt/appdata/{{pgrole}}/images:/config/var/www/wallabag/web/assets/images:rw'        
           - '{{path.stdout}}:{{path.stdout}}'
 
     - name: 'Setting PG ENV'
@@ -52,6 +52,7 @@
           PUID: '1000'
           PGID: '1000'
           TZ: '${TZ}'
+          SYMFONY__ENV__FOSUSER_REGISTRATION: 'false'
 
     # MAIN DEPLOYMENT #############################################################
     - name: 'Deploying {{pgrole}}'
