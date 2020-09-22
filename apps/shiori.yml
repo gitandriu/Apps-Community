@@ -42,10 +42,7 @@
     - name: 'Setting PG Volumes'
       set_fact:
         pg_volumes:
-          - '/opt/appdata/{{pgrole}}/data:/data:rw'
-          - '/opt/appdata/{{pgrole}}/config:/config:ro'        
-          - '{{path.stdout}}:{{path.stdout}}'
-
+          - '/opt/appdata/{{pgrole}}/config:/srv/shiori:rw' 
     - name: 'Setting PG ENV'
       set_fact:
         pg_env:
