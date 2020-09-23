@@ -53,7 +53,7 @@
           PGID: '1000'
           TZ: '${TZ}'
           SYMFONY__ENV__FOSUSER_REGISTRATION: 'false'
-          SYMFONY__ENV__DOMAIN_NAME: '{{pgrole}}.{{domain.stdout}}{{tldset}}{{cname}}'
+          SYMFONY__ENV__DOMAIN_NAME: 'https://{{pgrole}}.{{domain.stdout}}{{tldset}}{{cname}}'
           #OAUTH2_PROXY_CLIENT_ID=
           #OAUTH2_PROXY_CLIENT_SECRET=
           #OAUTH2_PROXY_COOKIE_SECRET= 
