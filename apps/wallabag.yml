@@ -46,6 +46,7 @@
           traefik.frontend.redirect.replacement: 'https://wallabag.andriu.top/$$1'
           traefik.frontend.redirect.permanent: 'true'
           com.centurylinklabs.watchtower.enable: 'true'
+          TRUSTED_PROXIES: '10.0.0.0/8,192.168.0.0/16'
 
     - name: 'Setting PG Volumes'
       set_fact:
