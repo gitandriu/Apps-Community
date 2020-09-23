@@ -39,6 +39,8 @@
           traefik.frontend.headers.contentTypeNosniff: 'true'
           traefik.frontend.headers.customResponseHeaders: 'X-Robots-Tag:noindex,nofollow,nosnippet,noarchive,notranslate,noimageindex'
           traefik.frontend.headers.forceSTSHeader: 'true'
+          traefik.http.routers.wallabag.middlewares: 'wallabagHeaders'
+          traefik.http.middlewares.wallabagHeaders.headers.sslProxyHeaders.X-Forwarded-Proto: 'https'
 
     - name: 'Setting PG Volumes'
       set_fact:
@@ -54,8 +56,7 @@
           PGID: '1000'
           TZ: '${TZ}'
           SYMFONY__ENV__FOSUSER_REGISTRATION: 'false'
-          SYMFONY__ENV__DOMAIN_NAME: 'https://wallabag.andriu.top'
-       
+          SYMFONY__ENV__DOMAIN_NAME: 'https://wallabag.andriu.top'     
 
     # MAIN DEPLOYMENT #############################################################
     - name: 'Deploying {{pgrole}}'
