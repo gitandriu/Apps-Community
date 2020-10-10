@@ -63,7 +63,7 @@
           PGID: '1000'
           TZ: '${TZ}'
           SYMFONY__ENV__FOSUSER_REGISTRATION: 'false'
-          SYMFONY__ENV__DOMAIN_NAME: 'https://wallabag.andriu.top'     
+          SYMFONY__ENV__DOMAIN_NAME: 'https://wallabag.andriu.xyz'     
 
     # MAIN DEPLOYMENT #############################################################
     - name: 'Deploying {{pgrole}}'
