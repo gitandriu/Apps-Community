@@ -12,10 +12,10 @@
     # FACTS #######################################################################
     - name: 'Set Known Facts'
       set_fact:
-        pgrole: 'radicale'
+        pgrole: 'tinc'
         intport: '5232'
         extport: '5232'      
-        image: 'tomsquest/docker-radicale'
+        image: 'florider89/tinc'
 
     # CORE (MANDATORY) ############################################################
     - name: 'Including cron job'
