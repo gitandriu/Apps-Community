@@ -13,8 +13,8 @@
     - name: 'Set Known Facts'
       set_fact:
         pgrole: 'tinc'
-        intport: '5232'
-        extport: '5232'      
+        intport: '655'
+        extport: '655'      
         image: 'florider89/tinc'
 
     # CORE (MANDATORY) ############################################################
@@ -34,8 +34,8 @@
     - name: 'Setting PG Volumes'
       set_fact:
         pg_volumes:
-          - '/opt/appdata/{{pgrole}}/data:/data:rw'
-          - '/opt/appdata/{{pgrole}}/config:/config:ro'        
+          - '/opt/appdata/{{pgrole}}/log:/var/log/tinc:rw'
+          - '/opt/appdata/{{pgrole}}/data:/etc/tinc:rw'    
           - '{{path.stdout}}:{{path.stdout}}'
 
     - name: 'Setting PG ENV'
@@ -43,7 +43,23 @@
         pg_env:
           PUID: '1000'
           PGID: '1000'
-          TZ: '${TZ}'
+          TZ: '${TZ}'      
+      #- GIT_USER=username
+      #- GIT_PASS=password
+   #   - GIT_URL=https://git.example.com/config/tinc-network
+    #  - ZABBIX_HOSTNAME=tinc-hostname-app      
+   #   - CRON_PERIOD=5
+   #   - DEBUG=1
+
+  #    - NETWORK=example
+   #   - NODE=hostname_example_org
+  #    - PUBLIC_IP=123.123.123.249
+  #    - PRIVATE_IP=172.22.0.43
+  #    - INTERFACE=tun0
+   #   - PEERS=hostname1_example_org hostname2_example_org
+  #    - COMPRESSION=9
+          
+
 
     # MAIN DEPLOYMENT #############################################################
     - name: 'Deploying {{pgrole}}'
