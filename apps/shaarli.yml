@@ -13,8 +13,6 @@
     - name: 'Set Known Facts'
       set_fact:
         pgrole: 'shaarli'
-        intport: '8080'
-        extport: '8030'      
         image: 'shaarli/shaarli'
 
     # CORE (MANDATORY) ############################################################
@@ -43,7 +41,8 @@
     - name: 'Setting PG Volumes'
       set_fact:
         pg_volumes:
-          - '/opt/appdata/{{pgrole}}/config:/srv/shiori:rw' 
+          - '/opt/appdata/{{pgrole}}/shaarli-cache:/var/www/shaarli/cache'
+          - '/opt/appdata/{{pgrole}}/shaarli-data:/var/www/shaarli/data'
     - name: 'Setting PG ENV'
       set_fact:
         pg_env:
