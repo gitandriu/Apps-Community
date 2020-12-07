@@ -10,19 +10,19 @@
   gather_facts: false
   tasks:
     # FACTS #######################################################################
-    - name: 'Set Known Facts postgres'
+    - name: 'Set Known Facts wekan-db'
       set_fact:
-        pgrole: 'postgres'
-        intport: '5432'
-        extport: '54321'
-        image: 'linuxserver/nextcloud'
+        pgrole1: 'wekan-db'
+        intport1: '27017'
+        extport1: '27017'
+        image1: 'quay.io/wekan/mongo:4.4.2-bionic'
         
-    - name: 'Set Known Facts turtle'
+    - name: 'Set Known Facts wekan'
       set_fact:
-        pgrole: 'nextcloud'
-        intport: '443'
-        extport: '4645'
-        image: 'linuxserver/nextcloud'
+        pgrole2: 'wekan'
+        intport2: '80'
+        extport2: '4546'
+        image2: 'quay.io/wekan/wekan'
  
     # CORE (MANDATORY) ############################################################
     - name: 'Including cron job'
@@ -46,12 +46,23 @@
           traefik.frontend.headers.customResponseHeaders: 'X-Robots-Tag:noindex,nofollow,nosnippet,noarchive,notranslate,noimageindex'
           traefik.frontend.headers.forceSTSHeader: 'true'
 
-    - name: 'Setting PG Volumes'
+    - name: 'Setting PG Volumes wekan-db'
+      set_fact:
+        pg_volumes:
+          - '/opt/appdata/{{pgrole}}:/var/lib/mysql'
+          - '/etc/localtime:/etc/localtime:ro'
+          
+    - name: 'Setting PG Volumes wekan'
       set_fact:
         pg_volumes:
           - '/opt/appdata/{{pgrole}}:/var/lib/mysql'
           - '/etc/localtime:/etc/localtime:ro'
 
+    - name: 'Setting PG ENV'
+      set_fact:
+        pg_env:
+          MYSQL_ROOT_PASSWORD: plexguide
+          
     - name: 'Setting PG ENV'
       set_fact:
         pg_env:
