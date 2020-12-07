@@ -61,11 +61,15 @@
     - name: 'Setting PG ENV'
       set_fact:
         pg_env:
+          PUID: '1000'
+          PGID: '1000'
           MYSQL_ROOT_PASSWORD: plexguide
           
     - name: 'Setting PG ENV'
       set_fact:
         pg_env:
+          PUID: '1000'
+          PGID: '1000'
           MYSQL_ROOT_PASSWORD: plexguide
 
     # MAIN DEPLOYMENT ##############################################################
