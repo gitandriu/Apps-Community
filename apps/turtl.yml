@@ -1,26 +1,42 @@
 #!/bin/bash
 #
-# Title:      MariaDB
-# Author(s):  MariaDB Foundation
-# URL:        https://mariadb.com - https://github.com/docker-library/mariadb
-# GNU:        General Public License v2.0
+# Title:      PGBlitz (Reference Title File)
+# Author(s):  Admin9705
+# URL:        https://pgblitz.com - http://github.pgblitz.com
+# GNU:        General Public License v3.0
 ################################################################################
 ---
 - hosts: localhost
   gather_facts: false
   tasks:
-    # CORE (MANDATORY) DO NOT CHANGE ###########################################
-
+    # FACTS #######################################################################
     - name: 'Set Known Facts'
       set_fact:
-        pgrole: 'mariadb'
-        intport: '3306'
-        extport: '6603'
-        image: 'mariadb:latest'
+        pgrole: 'nextcloud'
+        intport: '443'
+        extport: '4645'
+        image: 'linuxserver/nextcloud'
+        
+    - name: 'Set Known Facts'
+      set_fact:
+        pgrole: 'nextcloud'
+        intport: '443'
+        extport: '4645'
+        image: 'linuxserver/nextcloud'
+        
+    - name: 'Set Known Facts'
+      set_fact:
+        pgrole: 'nextcloud'
+        intport: '443'
+        extport: '4645'
+        image: 'linuxserver/nextcloud'
+        
+        
 
+    # CORE (MANDATORY) ############################################################
     - name: 'Including cron job'
       include_tasks: '/opt/communityapps/apps/_core.yml'
-
+      
     # LABELS ################################################################
     - name: 'Adding Traefik'
       set_fact:
