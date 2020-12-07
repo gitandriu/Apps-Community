@@ -15,8 +15,6 @@
         pgrole: 'shaarli'
         intport: '80'
         extport: '5814'
-        intport2: '443'
-        extport2: '5913'
         image: 'shaarli/shaarli'
 
     # CORE (MANDATORY) ############################################################
@@ -50,8 +48,8 @@
     - name: 'Setting PG ENV'
       set_fact:
         pg_env:
-          PUID: '1000'
-          PGID: '1000'
+          #PUID: '1000'
+          #PGID: '1000'
           TZ: '${TZ}'
 
     # MAIN DEPLOYMENT #############################################################
