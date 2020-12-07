@@ -13,6 +13,10 @@
     - name: 'Set Known Facts'
       set_fact:
         pgrole: 'shaarli'
+        intport: '80'
+        extport: '5814'
+        intport2: '443'
+        extport2: '5913'
         image: 'shaarli/shaarli'
 
     # CORE (MANDATORY) ############################################################
