@@ -64,15 +64,15 @@
         pg_env:
           PUID: '1000'
           PGID: '1000'
-          MONGO_URL: mongodb://wekandb:27017/wekan
-          ROOT_URL: https://wekan.andriu.xyz
-          MAIL_URL: smtp://wekan:wekan@mailserver:25
-          MAIL_FROM: Wekan Notifications <noreply.wekan@andriu.xyz>
-          WITH_API: true
-          RICHER_CARD_COMMENT_EDITOR: false
-          CARD_OPENED_WEBHOOK_ENABLED: false
-          BIGEVENTS_PATTERN: NONE
-          BROWSER_POLICY_ENABLED: true
+          MONGO_URL: 'mongodb://wekandb:27017/wekan'
+          ROOT_URL: 'https://wekan.andriu.xyz'
+          MAIL_URL: 'smtp://wekan:wekan@mailserver:25'
+          MAIL_FROM: 'Wekan Notifications <noreply.wekan@andriu.xyz>'
+          WITH_API: 'true'
+          RICHER_CARD_COMMENT_EDITOR: 'false'
+          CARD_OPENED_WEBHOOK_ENABLED: 'false'
+          BIGEVENTS_PATTERN: 'NONE'
+          BROWSER_POLICY_ENABLED: 'true'
 
     # MAIN DEPLOYMENT ##############################################################
 
