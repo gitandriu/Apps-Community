@@ -10,29 +10,20 @@
   gather_facts: false
   tasks:
     # FACTS #######################################################################
-    - name: 'Set Known Facts'
+    - name: 'Set Known Facts postgres'
+      set_fact:
+        pgrole: 'postgres'
+        intport: '5432'
+        extport: '54321'
+        image: 'linuxserver/nextcloud'
+        
+    - name: 'Set Known Facts turtle'
       set_fact:
         pgrole: 'nextcloud'
         intport: '443'
         extport: '4645'
         image: 'linuxserver/nextcloud'
-        
-    - name: 'Set Known Facts'
-      set_fact:
-        pgrole: 'nextcloud'
-        intport: '443'
-        extport: '4645'
-        image: 'linuxserver/nextcloud'
-        
-    - name: 'Set Known Facts'
-      set_fact:
-        pgrole: 'nextcloud'
-        intport: '443'
-        extport: '4645'
-        image: 'linuxserver/nextcloud'
-        
-        
-
+ 
     # CORE (MANDATORY) ############################################################
     - name: 'Including cron job'
       include_tasks: '/opt/communityapps/apps/_core.yml'
