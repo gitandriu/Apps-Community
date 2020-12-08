@@ -50,7 +50,7 @@
       set_fact:
         pg_volumes:
           - /opt/appdata/wekan/db:/data/db
-          - wekan-db-dump:/dump
+          - /opt/appdata/wekan/dump:/dump
           - '/etc/localtime:/etc/localtime:ro'
 
     - name: 'Setting PG ENV wekan-db'
