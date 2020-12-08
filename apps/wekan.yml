@@ -12,7 +12,7 @@
     # FACTS #######################################################################
     - name: 'Set Known Facts wekan-db'
       set_fact:
-        pgrole1: 'wekan-db'
+        pgrole1: 'wekandb'
         intport1: '27017'
         extport1: '27017'
         image1: 'quay.io/wekan/mongo:4.4.2-bionic'
@@ -64,7 +64,7 @@
         pg_env:
           PUID: '1000'
           PGID: '1000'
-          MONGO_URL: 'mongodb://wekan-db:27017/wekan'
+          MONGO_URL: 'mongodb://wekandb:27017/wekan'
           ROOT_URL: 'https://wekan.andriu.xyz'
           MAIL_URL: 'smtp://wekan:wekan@mailserver:25'
           MAIL_FROM: 'Wekan Notifications <noreply.wekan@andriu.xyz>'
