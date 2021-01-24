@@ -34,8 +34,8 @@
         pg_labels:
           traefik.frontend.auth.forward.address: '{{gauth}}'
           traefik.enable: 'true'
-          traefik.port: '{{intport}}'
-          traefik.frontend.rule: 'Host:{{pgrole}}.{{domain.stdout}}{{tldset}}{{cname}}'
+          traefik.port: '{{intport1}}'
+          traefik.frontend.rule: 'Host:{{pgrole1}}.{{domain.stdout}}{{tldset}}{{cname}}'
           traefik.frontend.headers.SSLHost: '{{domain.stdout}}'
           traefik.frontend.headers.SSLRedirect: 'true'
           traefik.frontend.headers.STSIncludeSubdomains: 'true'
@@ -76,34 +76,65 @@
 
     # MAIN DEPLOYMENT ##############################################################
 
-    - name: 'Deploying {{pgrole0}}'
-      docker_container:
-        name: '{{pgrole0}}'
-        image: '{{image0}}'
-        pull: yes
-        published_ports:
-          - '{{ports.stdout}}{{extport0}}:{{intport0}}'
-        volumes: '{{pg_volumes}}'
-        env: '{{pg_env0}}'
-        restart_policy: unless-stopped
-        networks:
-          - name: plexguide
-            aliases:
-              - '{{pgrole0}}'
-        state: started
+    - name: Check if Wekan DB is running
+      docker_container_info:
+        name: wekan-db
+      register: wekan_db_state
+
+    - block
+      - name: 'Deploying {{pgrole0}}'
+        docker_container:
+          name: '{{pgrole0}}'
+          image: '{{image0}}'
+          pull: yes
+          published_ports:
+            - '{{ports.stdout}}{{extport0}}:{{intport0}}'
+          volumes: '{{pg_volumes}}'
+          env: '{{pg_env0}}'
+          restart_policy: unless-stopped
+          networks:
+            - name: plexguide
+              aliases:
+                - '{{pgrole0}}'
+          state: started
+          register:wekan_db_register
+
+      - name: Wait for Wekan DB to accept connections
+        wait_for:
+          host: "{{ wekan_db_register['ansible_facts']\
+            ['docker_container']\
+            ['NetworkSettings']\
+            ['Networks']\
+            ['plexguide']\
+            ['IPAddress'] }}"
+          port: '{{intport0}}'
+          state: started
+          connect_timeout: 1
+          timeout: 30
+        register: wekan_db_running
+        until: wekan_db_running is success
+        retries: 10 
+      when: not wekan_db_state.exists
   
-    - name: 'Deploying {{pgrole1}}'
-      docker_container:
-        name: '{{pgrole1}}'
-        image: '{{image1}}'
-        pull: yes
-        published_ports:
-          - '{{ports.stdout}}{{extport1}}:{{intport1}}'
-        env: '{{pg_env1}}'
-        restart_policy: unless-stopped
-        networks:
-          - name: plexguide
-            aliases:
-              - '{{pgrole1}}'
-        state: started
-        labels: '{{pg_labels}}'
+    - name: Check if Wekan is running
+      docker_container_info:
+        name: wekan
+      register: wekan_state
+        
+    - block      
+      - name: 'Deploying {{pgrole1}}'
+        docker_container:
+          name: '{{pgrole1}}'
+          image: '{{image1}}'
+          pull: yes
+          published_ports:
+            - '{{ports.stdout}}{{extport1}}:{{intport1}}'
+          env: '{{pg_env1}}'
+          restart_policy: unless-stopped
+          networks:
+            - name: plexguide
+              aliases:
+                - '{{pgrole1}}'
+          state: started
+          labels: '{{pg_labels}}'
+      when: not wekan_state.exists
