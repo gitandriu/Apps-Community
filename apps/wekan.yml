@@ -12,17 +12,17 @@
     # FACTS #######################################################################
     - name: 'Set Known Facts wekan-db'
       set_fact:
-        pgrole1: 'wekandb'
-        intport1: '27017'
-        extport1: '27017'
-        image1: 'quay.io/wekan/mongo:4.4.2-bionic'
+        pgrole0: 'wekandb'
+        intport0: '27017'
+        extport0: '27017'
+        image0: 'quay.io/wekan/mongo:4.4.2-bionic'
         
     - name: 'Set Known Facts wekan'
       set_fact:
-        pgrole: 'wekan'
-        intport: '80'
-        extport: '4546'
-        image: 'quay.io/wekan/wekan'
+        pgrole1: 'wekan'
+        intport1: '80'
+        extport1: '4546'
+        image1: 'quay.io/wekan/wekan'
  
     # CORE (MANDATORY) ############################################################
     - name: 'Including cron job'
@@ -55,13 +55,13 @@
 
     - name: 'Setting PG ENV wekan-db'
       set_fact:
-        pg_env1:
+        pg_env0:
           PUID: '1000'
           PGID: '1000'
           
     - name: 'Setting PG ENV wekan'
       set_fact:
-        pg_env:
+        pg_env1:
           PUID: '1000'
           PGID: '1000'
           MONGO_URL: 'mongodb://wekandb:27017/wekan'
@@ -76,6 +76,22 @@
 
     # MAIN DEPLOYMENT ##############################################################
 
+    - name: 'Deploying {{pgrole0}}'
+      docker_container:
+        name: '{{pgrole0}}'
+        image: '{{image0}}'
+        pull: yes
+        published_ports:
+          - '{{ports.stdout}}{{extport0}}:{{intport0}}'
+        volumes: '{{pg_volumes}}'
+        env: '{{pg_env0}}'
+        restart_policy: unless-stopped
+        networks:
+          - name: plexguide
+            aliases:
+              - '{{pgrole0}}'
+        state: started
+  
     - name: 'Deploying {{pgrole1}}'
       docker_container:
         name: '{{pgrole1}}'
@@ -83,27 +99,11 @@
         pull: yes
         published_ports:
           - '{{ports.stdout}}{{extport1}}:{{intport1}}'
-        volumes: '{{pg_volumes}}'
         env: '{{pg_env1}}'
         restart_policy: unless-stopped
         networks:
           - name: plexguide
             aliases:
               - '{{pgrole1}}'
-        state: started
-  
-    - name: 'Deploying {{pgrole}}'
-      docker_container:
-        name: '{{pgrole}}'
-        image: '{{image}}'
-        pull: yes
-        published_ports:
-          - '{{ports.stdout}}{{extport}}:{{intport}}'
-        env: '{{pg_env}}'
-        restart_policy: unless-stopped
-        networks:
-          - name: plexguide
-            aliases:
-              - '{{pgrole}}'
         state: started
         labels: '{{pg_labels}}'
