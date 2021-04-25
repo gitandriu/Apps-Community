@@ -15,7 +15,7 @@
         pgrole: 'guacamole'
         intport: '8080'
         extport: '8678'      
-        image: 'oznu/guacamole'
+        image: 'maxwaldorf/guacamole'
 
     # CORE (MANDATORY) ############################################################
     - name: 'Including cron job'
